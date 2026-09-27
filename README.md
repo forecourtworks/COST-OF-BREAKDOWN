@@ -1,30 +1,19 @@
-# FORECOURT WORKS — Dispenser Breakdown Loss Calculator
+# FORECOURT WORKS — Breakdown Loss Calculator (Multi-product)
 
-Demonstration tool for Reliability & Maintenance sales conversations.
-
-## Purpose
-Quantify fuel sales exposure (litres + KES) when a dispenser / product stream is offline, so clients can see downtime in financial terms.
-
-## Products
-- **PMS** — Petrol / Motor Spirit  
-- **AGO** — Automotive Gas Oil (Diesel)  
-- **V. POWER** — Premium grade  
-- **IK** — Illuminating Kerosene  
-
-## Periods calculated
-Per minute · hour · day · week · month (30d) · quarter (90d) · semi-annual (182.5d) · annual (365d)
-
-## Core formulas
-- Effective L/hour = f(daily|hourly|monthly volume, operating hours, utilisation, nozzles)
-- Loss (L) = Effective L/hour × hours in period (open-hours model)
-- Revenue loss (KES) = Loss (L) × selling price
-- Margin loss (KES) = Loss (L) × gross margin (optional)
-
-## Tabs
-Inputs are **not destroyed** when switching tabs (no full page refresh / re-mount of form).
+## Model
+- User enters **volume sold per product per day** (all nozzles of that grade).
+- User enters **number of nozzles** selling that product.
+- App auto-calculates **litres per nozzle per day** = daily volume ÷ nozzles.
+- Up to **3 products** at once: PMS, AGO, V. POWER, IK.
+- Loss periods: minute → annual (open-hours model).
 
 ## PDF
-Share as PDF uses double navy boundary, FORECOURT-SWL logo mark, company header, footer with doc id and page numbers — aligned with FSW controlled-document presentation rules.
+- Maximum **1 page**.
+- Each product in its **own colour column**.
+- Double navy boundary; footer **inside** the frame (not crossed by the border).
+- Embedded FORECOURT-SWL mark.
 
-## How to run
-Open `index.html` in a browser (keep logo PNG files in the same folder).
+## Web header
+- White background with official FORECOURT-SWL logo lockup.
+
+Open `index.html` from this folder.

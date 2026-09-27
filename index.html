@@ -10,84 +10,115 @@
       --navy: #0d478c;
       --navy-dark: #0a3568;
       --accent: #c45c0a;
-      --success: #1a7346;
       --danger: #b91c1c;
-      --bg: #f0f4f8;
+      --success: #1a7346;
+      --bg: #eef2f7;
       --card: #ffffff;
-      --border: #d1d9e6;
-      --text: #1e293b;
+      --border: #d0d7e2;
+      --text: #0f172a;
       --muted: #64748b;
+      --pms: #0d478c;
+      --ago: #b45309;
+      --vpower: #6d28d9;
+      --ik: #0f766e;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.45;
       min-height: 100vh;
-      padding-bottom: 40px;
+      padding-bottom: 48px;
     }
+
+    /* —— Web header: pure white + new logo —— */
     .app-header {
-      background: linear-gradient(135deg, var(--navy-dark), var(--navy));
-      color: #fff;
-      padding: 16px 20px 20px;
-      box-shadow: 0 4px 16px rgba(13,71,140,0.25);
+      background: #ffffff;
+      color: var(--text);
+      border-bottom: 3px solid var(--navy);
+      padding: 14px 20px 16px;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
     }
     .app-header-top {
+      max-width: 1120px;
+      margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
     }
-    .app-logo { height: 42px; max-width: 200px; object-fit: contain; background: #fff; border-radius: 6px; padding: 4px 8px; }
-    .company-block { flex: 1; min-width: 220px; }
-    .company-name { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.02em; }
-    .company-details { font-size: 0.78rem; opacity: 0.92; margin-top: 4px; line-height: 1.4; }
+    .brand-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .app-logo {
+      height: 52px;
+      width: auto;
+      max-width: 280px;
+      object-fit: contain;
+      display: block;
+    }
+    .company-block { min-width: 200px; }
+    .company-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+    }
+    .company-details {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 3px;
+      line-height: 1.35;
+    }
     .tagline {
       font-style: italic;
-      color: #ffc107;
-      font-size: 0.92rem;
-      margin-top: 8px;
-      font-weight: 500;
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-top: 4px;
     }
     .doc-badge {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 8px;
-      padding: 8px 12px;
-      font-size: 0.75rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.72rem;
+      color: var(--muted);
       text-align: right;
     }
+    .doc-badge b { color: var(--navy); font-size: 0.8rem; }
+
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 16px; }
+
     .hero {
-      max-width: 1100px;
-      margin: 18px auto 0;
-      padding: 0 16px;
-    }
-    .hero-card {
-      background: linear-gradient(90deg, #fff7ed, #ffffff);
+      background: linear-gradient(105deg, #fff7ed 0%, #ffffff 55%);
       border: 1px solid #fed7aa;
       border-left: 5px solid var(--accent);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 14px 16px;
-      font-size: 0.92rem;
+      margin-bottom: 14px;
+      font-size: 0.9rem;
       color: #7c2d12;
     }
-    .hero-card strong { color: var(--danger); }
-    .wrap { max-width: 1100px; margin: 16px auto; padding: 0 16px; }
+    .hero strong { color: var(--danger); }
 
     .tabs {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       background: #fff;
       padding: 8px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid var(--border);
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 40;
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     .tab-btn {
@@ -95,56 +126,61 @@
       background: transparent;
       padding: 10px 14px;
       border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.88rem;
+      font-weight: 700;
+      font-size: 0.86rem;
       cursor: pointer;
       color: var(--muted);
       font-family: inherit;
     }
-    .tab-btn.active {
-      background: var(--navy);
-      color: #fff;
-    }
+    .tab-btn.active { background: var(--navy); color: #fff; }
+
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 800px) {
-      .grid-2 { grid-template-columns: 1fr; }
-    }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border-radius: 14px;
+      padding: 18px;
       margin-bottom: 14px;
+      box-shadow: 0 2px 10px rgba(15,23,42,0.04);
     }
-    .card h2 {
-      font-size: 1rem;
+    .card-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       color: var(--navy);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       padding-bottom: 8px;
       border-bottom: 2px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .card h3 {
-      font-size: 0.92rem;
-      color: var(--navy-dark);
-      margin: 12px 0 8px;
+    .card-title .step {
+      background: var(--navy);
+      color: #fff;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
     }
+
     label {
       display: block;
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-size: 0.72rem;
+      font-weight: 700;
       color: var(--muted);
       margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
     }
     .form-group { margin-bottom: 12px; }
-    input, select, textarea {
+    input, select {
       width: 100%;
       padding: 10px 12px;
       border: 1.5px solid var(--border);
@@ -153,51 +189,93 @@
       font-family: inherit;
       background: #fff;
     }
-    input:focus, select:focus, textarea:focus {
+    input:focus, select:focus {
       outline: none;
       border-color: var(--navy);
       box-shadow: 0 0 0 3px rgba(13,71,140,0.12);
     }
-    .row-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    @media (max-width: 700px) {
+      .row-2, .row-3 { grid-template-columns: 1fr; }
     }
-    .row-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    @media (max-width: 600px) {
-      .row-3, .row-2 { grid-template-columns: 1fr; }
-    }
-    .product-chips {
+    .help { font-size: 0.72rem; color: var(--muted); margin-top: 4px; }
+
+    .product-toggle {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
+      margin-bottom: 14px;
     }
-    @media (max-width: 600px) {
-      .product-chips { grid-template-columns: 1fr 1fr; }
-    }
-    .product-chip {
+    @media (max-width: 600px) { .product-toggle { grid-template-columns: 1fr 1fr; } }
+    .p-toggle {
       border: 2px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 12px 8px;
       text-align: center;
       cursor: pointer;
       background: #fff;
-      font-weight: 700;
-      font-size: 0.88rem;
-      transition: 0.15s;
+      font-weight: 800;
+      font-size: 0.9rem;
       user-select: none;
+      transition: 0.15s;
     }
-    .product-chip small { display: block; font-weight: 500; font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
-    .product-chip.selected {
-      border-color: var(--navy);
-      background: #e8f1fb;
-      color: var(--navy);
+    .p-toggle small { display: block; font-weight: 500; font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+    .p-toggle.on-PMS { border-color: var(--pms); background: #e8f1fb; color: var(--pms); }
+    .p-toggle.on-AGO { border-color: var(--ago); background: #fff7ed; color: var(--ago); }
+    .p-toggle.on-VPOWER { border-color: var(--vpower); background: #f5f3ff; color: var(--vpower); }
+    .p-toggle.on-IK { border-color: var(--ik); background: #f0fdfa; color: var(--ik); }
+
+    .product-panels {
+      display: grid;
+      gap: 12px;
     }
-    .help { font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
+    .product-panels.cols-1 { grid-template-columns: 1fr; }
+    .product-panels.cols-2 { grid-template-columns: 1fr 1fr; }
+    .product-panels.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 900px) {
+      .product-panels.cols-2, .product-panels.cols-3 { grid-template-columns: 1fr; }
+    }
+
+    .product-panel {
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      background: #fafbfc;
+      display: none;
+    }
+    .product-panel.active { display: block; }
+    .product-panel.head-PMS { border-top: 4px solid var(--pms); }
+    .product-panel.head-AGO { border-top: 4px solid var(--ago); }
+    .product-panel.head-VPOWER { border-top: 4px solid var(--vpower); }
+    .product-panel.head-IK { border-top: 4px solid var(--ik); }
+    .panel-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+    .panel-title.PMS { color: var(--pms); }
+    .panel-title.AGO { color: var(--ago); }
+    .panel-title.VPOWER { color: var(--vpower); }
+    .panel-title.IK { color: var(--ik); }
+
+    .auto-box {
+      background: #fff;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-top: 8px;
+      font-size: 0.82rem;
+    }
+    .auto-box b { color: var(--navy); }
+
+    .site-ops {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 600px) { .site-ops { grid-template-columns: 1fr; } }
+
     .btn {
       display: inline-flex;
       align-items: center;
@@ -205,9 +283,9 @@
       gap: 6px;
       padding: 12px 18px;
       border: none;
-      border-radius: 8px;
+      border-radius: 9px;
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       cursor: pointer;
       font-family: inherit;
     }
@@ -215,171 +293,153 @@
     .btn-primary:hover { background: var(--navy-dark); }
     .btn-accent { background: var(--accent); color: #fff; }
     .btn-outline { background: #fff; border: 1.5px solid var(--border); color: var(--text); }
-    .btn-block { width: 100%; }
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .loss-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-    .loss-table th, .loss-table td {
-      border: 1px solid var(--border);
-      padding: 10px 8px;
-      text-align: right;
-    }
-    .loss-table th {
-      background: var(--navy);
-      color: #fff;
-      text-align: center;
-      font-weight: 700;
-    }
-    .loss-table td:first-child, .loss-table th:first-child {
-      text-align: left;
-      font-weight: 600;
-    }
-    .loss-table tbody tr:nth-child(even) { background: #f8fafc; }
-    .loss-table .kes { color: var(--danger); font-weight: 800; }
-    .loss-table .liters { color: var(--navy); font-weight: 700; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
 
     .impact-banner {
       background: linear-gradient(135deg, #7f1d1d, #b91c1c);
       color: #fff;
-      border-radius: 12px;
-      padding: 18px 20px;
-      margin: 14px 0;
+      border-radius: 14px;
+      padding: 18px 16px;
       text-align: center;
+      margin-bottom: 14px;
     }
-    .impact-banner .big {
-      font-size: 1.8rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-    }
-    .impact-banner .sub { opacity: 0.92; margin-top: 4px; font-size: 0.9rem; }
-    .kpi-row {
+    .impact-banner .big { font-size: 1.65rem; font-weight: 900; }
+    .impact-banner .sub { opacity: 0.92; font-size: 0.88rem; margin-top: 4px; }
+
+    .results-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin: 12px 0;
+      gap: 12px;
     }
-    @media (max-width: 700px) {
-      .kpi-row { grid-template-columns: 1fr 1fr; }
+    .results-grid.cols-1 { grid-template-columns: 1fr; }
+    .results-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .results-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 900px) {
+      .results-grid.cols-2, .results-grid.cols-3 { grid-template-columns: 1fr; }
     }
-    .kpi {
-      background: #fff;
+
+    .result-col {
       border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .result-col .col-head {
+      padding: 10px 12px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .result-col .col-head.PMS { background: var(--pms); }
+    .result-col .col-head.AGO { background: var(--ago); }
+    .result-col .col-head.VPOWER { background: var(--vpower); }
+    .result-col .col-head.IK { background: var(--ik); }
+    .result-col table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .result-col th, .result-col td {
+      padding: 7px 8px;
+      border-bottom: 1px solid #eef2f7;
+      text-align: right;
+    }
+    .result-col th:first-child, .result-col td:first-child { text-align: left; font-weight: 600; }
+    .result-col .kes { color: var(--danger); font-weight: 800; }
+    .result-col .liters { color: var(--navy); font-weight: 700; }
+    .result-col .meta {
+      padding: 8px 10px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: #f8fafc;
+      border-top: 1px solid var(--border);
+    }
+
+    .pitch-box {
+      background: #f8fafc;
       border-radius: 10px;
-      padding: 12px;
-      text-align: center;
+      padding: 14px;
+      font-size: 0.9rem;
     }
-    .kpi .val { font-size: 1.15rem; font-weight: 800; color: var(--danger); }
-    .kpi .lbl { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+    .pitch-box ul { margin: 8px 0 8px 18px; }
 
-    .formula-box {
-      background: #f1f5f9;
-      border-radius: 8px;
-      padding: 10px 12px;
-      font-size: 0.8rem;
-      color: #334155;
-      margin-top: 10px;
-    }
-    .formula-box code { font-family: ui-monospace, monospace; color: var(--navy); }
-
-    .scenario-note {
-      border-left: 4px solid var(--accent);
-      background: #fff7ed;
-      padding: 10px 12px;
-      border-radius: 0 8px 8px 0;
-      font-size: 0.85rem;
-      margin-top: 10px;
-    }
     footer.app-foot {
       text-align: center;
       color: var(--muted);
-      font-size: 0.75rem;
-      margin-top: 24px;
-      padding: 12px;
+      font-size: 0.72rem;
+      margin-top: 20px;
     }
     .toast {
       position: fixed;
-      bottom: 24px;
+      bottom: 22px;
       left: 50%;
       transform: translateX(-50%);
       background: #0f172a;
       color: #fff;
       padding: 12px 18px;
       border-radius: 8px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       z-index: 200;
       display: none;
-      max-width: 90%;
+      max-width: 92%;
     }
     .toast.show { display: block; }
     .toast.success { background: var(--success); }
     .toast.error { background: var(--danger); }
+
+    .limit-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .limit-note.warn { color: var(--accent); font-weight: 600; }
   </style>
 </head>
 <body>
   <header class="app-header">
     <div class="app-header-top">
-      <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;">
+      <div class="brand-row">
         <img src="forecourt-logo-banner.png" alt="FORECOURT-SWL" class="app-logo" />
         <div class="company-block">
           <div class="company-name">FORECOURT WORKS LIMITED</div>
           <div class="company-details">
             Ramco Court, GT 3B, South C, Nairobi<br/>
-            Phone: +(254) 729-002-087 &nbsp;|&nbsp; Email: sales@forecourtworks.co.ke<br/>
-            www.forecourtworks.co.ke
+            +(254) 729-002-087 · sales@forecourtworks.co.ke · www.forecourtworks.co.ke
           </div>
           <div class="tagline">Engineering Reliability Into Every Forecourt</div>
         </div>
       </div>
       <div class="doc-badge">
         <div><b>BREAKDOWN LOSS CALCULATOR</b></div>
-        <div>Doc: FSW-DEMO-LOSS-01</div>
-        <div>Rev: Sep 2026</div>
+        <div>Doc: FSW-DEMO-LOSS-01 · Rev Sep 2026</div>
       </div>
     </div>
   </header>
 
-  <div class="hero">
-    <div class="hero-card">
-      <strong>Why this matters:</strong> Every minute a dispenser is down, the station is not only losing litres — it is losing cash, customer trust, and competitive edge.
-      Use real site numbers below to show the client the <strong>true cost of delay</strong> in repairing or maintaining their equipment — and why proactive R&amp;M is cheaper than unplanned downtime.
-    </div>
-  </div>
-
   <div class="wrap">
-    <div class="tabs" role="tablist">
-      <button type="button" class="tab-btn active" data-tab="inputs">1. Site &amp; Sales Inputs</button>
-      <button type="button" class="tab-btn" data-tab="results">2. Loss Results</button>
-      <button type="button" class="tab-btn" data-tab="scenarios">3. Downtime Scenarios</button>
-      <button type="button" class="tab-btn" data-tab="pitch">4. R&amp;M Value Pitch</button>
+    <div class="hero">
+      <strong>Client demo tool:</strong> Enter real daily volumes per product. The app shows sales loss in litres and KES when nozzles are down —
+      so the cost of delay is impossible to ignore. Select up to <b>3 products</b> at once for multi-grade islands.
     </div>
 
-    <!-- TAB 1: INPUTS - never destroyed when switching tabs -->
+    <div class="tabs">
+      <button type="button" class="tab-btn active" data-tab="inputs">1. Inputs</button>
+      <button type="button" class="tab-btn" data-tab="results">2. Loss Results</button>
+      <button type="button" class="tab-btn" data-tab="pitch">3. R&amp;M Pitch</button>
+    </div>
+
     <section id="tab-inputs" class="tab-panel active">
-      <div class="grid-2">
-        <div class="card">
-          <h2>1. Client &amp; Site Context</h2>
+      <div class="card">
+        <div class="card-title"><span class="step">1</span> Client &amp; operating profile</div>
+        <div class="row-2">
           <div class="form-group">
-            <label>Client / Station Name</label>
-            <input type="text" id="client-name" placeholder="e.g. Ainushamsi Energy – South C" class="auto-caps" />
+            <label>Client / Station name</label>
+            <input type="text" id="client-name" class="auto-caps" placeholder="e.g. AINUSHAMSI ENERGY" />
           </div>
-          <div class="row-2">
-            <div class="form-group">
-              <label>Site Location</label>
-              <input type="text" id="site-location" placeholder="Nairobi" class="auto-caps" />
-            </div>
-            <div class="form-group">
-              <label>Prepared by (FSW)</label>
-              <input type="text" id="prepared-by" placeholder="Technician / Sales name" class="auto-caps" />
-            </div>
+          <div class="form-group">
+            <label>Site location</label>
+            <input type="text" id="site-location" class="auto-caps" placeholder="e.g. SOUTH C" />
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="form-group">
+            <label>Prepared by (FSW)</label>
+            <input type="text" id="prepared-by" class="auto-caps" placeholder="Name" />
           </div>
           <div class="form-group">
             <label>Date</label>
@@ -387,185 +447,156 @@
             <div class="help" id="date-hint"></div>
           </div>
         </div>
-
-        <div class="card">
-          <h2>2. Product Under Query</h2>
-          <div class="product-chips" id="product-chips">
-            <div class="product-chip selected" data-product="PMS"><span>PMS</span><small>Petrol / Motor Spirit</small></div>
-            <div class="product-chip" data-product="AGO"><span>AGO</span><small>Automotive Gas Oil (Diesel)</small></div>
-            <div class="product-chip" data-product="V.POWER"><span>V. POWER</span><small>Premium / Super grade</small></div>
-            <div class="product-chip" data-product="IK"><span>IK</span><small>Illuminating Kerosene</small></div>
-          </div>
-          <input type="hidden" id="product" value="PMS" />
-          <div class="form-group" style="margin-top:14px;">
-            <label>Selling price (KES / Litre)</label>
-            <input type="number" id="price-kes" min="0" step="0.01" placeholder="e.g. 189.50" />
-            <div class="help">Use current pump selling price for the selected product</div>
-          </div>
+        <div class="site-ops">
           <div class="form-group">
-            <label>Gross margin (KES / Litre) — optional</label>
-            <input type="number" id="margin-kes" min="0" step="0.01" placeholder="e.g. 8.50" />
-            <div class="help">If filled, app also shows margin (true profit) loss alongside revenue loss</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>3. Throughput &amp; Operating Profile</h2>
-        <div class="row-3">
-          <div class="form-group">
-            <label>Input method</label>
-            <select id="throughput-mode">
-              <option value="daily">Average litres sold per day (this product / affected nozzle)</option>
-              <option value="hourly">Average litres dispensed per operating hour</option>
-              <option value="monthly">Average litres sold per month</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label id="volume-label">Average daily volume (Litres)</label>
-            <input type="number" id="volume" min="0" step="0.01" placeholder="e.g. 4500" />
-          </div>
-          <div class="form-group">
-            <label>Affected nozzles / hoses</label>
-            <input type="number" id="nozzles" min="1" step="1" value="1" />
-            <div class="help">If volume is for one nozzle, leave as 1. If volume is whole product grade, set nozzles accordingly or enter grade volume once.</div>
-          </div>
-        </div>
-        <div class="row-3">
-          <div class="form-group">
-            <label>Operating hours per day</label>
+            <label>Operating hours / day</label>
             <input type="number" id="hours-day" min="1" max="24" step="0.5" value="18" />
           </div>
           <div class="form-group">
-            <label>Operating days per week</label>
+            <label>Operating days / week</label>
             <input type="number" id="days-week" min="1" max="7" step="1" value="7" />
           </div>
           <div class="form-group">
-            <label>Utilisation during open hours (%)</label>
-            <input type="number" id="utilisation" min="1" max="100" step="1" value="100" />
-            <div class="help">100% = volume already reflects real sales. Use lower % only if volume is theoretical max capacity.</div>
+            <label>Est. repair cost (KES) — optional</label>
+            <input type="number" id="repair-cost" min="0" step="1" placeholder="e.g. 45000" />
           </div>
-        </div>
-        <div class="formula-box">
-          <b>Core formula (pre-installed):</b><br/>
-          Effective L/hour = (Daily litres ÷ Operating hours) × (Utilisation ÷ 100)<br/>
-          Or if hourly mode: Effective L/hour = Hourly litres × (Utilisation ÷ 100)<br/>
-          <code>Loss (L) over period = Effective L/hour × hours in period</code><br/>
-          <code>Loss (KES revenue) = Loss (L) × Selling price</code><br/>
-          <code>Loss (KES margin) = Loss (L) × Gross margin</code> (if margin provided)
         </div>
       </div>
 
       <div class="card">
-        <h2>4. Breakdown Duration (for scenario totals)</h2>
-        <div class="row-3">
-          <div class="form-group">
-            <label>Estimated downtime</label>
-            <input type="number" id="downtime-value" min="0" step="0.1" value="3" />
+        <div class="card-title"><span class="step">2</span> Select products (1–3 maximum)</div>
+        <div class="product-toggle" id="product-toggle">
+          <div class="p-toggle" data-product="PMS">PMS<small>Petrol</small></div>
+          <div class="p-toggle" data-product="AGO">AGO<small>Diesel</small></div>
+          <div class="p-toggle" data-product="V.POWER">V. POWER<small>Premium</small></div>
+          <div class="p-toggle" data-product="IK">IK<small>Kerosene</small></div>
+        </div>
+        <div class="limit-note" id="limit-note">Select at least one product. Maximum 3 at the same time.</div>
+
+        <div class="product-panels cols-1" id="product-panels">
+          <!-- panels injected / shown by JS -->
+          <div class="product-panel head-PMS" data-product="PMS" id="panel-PMS">
+            <div class="panel-title PMS">PMS — Petrol / Motor Spirit</div>
+            <div class="form-group">
+              <label>Volume sold per day (all PMS nozzles) — Litres</label>
+              <input type="number" class="vol-day" data-product="PMS" min="0" step="0.01" placeholder="e.g. 6000" />
+            </div>
+            <div class="form-group">
+              <label>Number of nozzles selling PMS</label>
+              <input type="number" class="nozzles" data-product="PMS" min="1" step="1" value="1" />
+            </div>
+            <div class="form-group">
+              <label>Selling price (KES / Litre)</label>
+              <input type="number" class="price" data-product="PMS" min="0" step="0.01" placeholder="e.g. 189.50" />
+            </div>
+            <div class="form-group">
+              <label>Gross margin (KES / L) — optional</label>
+              <input type="number" class="margin" data-product="PMS" min="0" step="0.01" placeholder="e.g. 8.00" />
+            </div>
+            <div class="auto-box">Auto: <b class="vpn" data-product="PMS">—</b> litres / nozzle / day</div>
           </div>
-          <div class="form-group">
-            <label>Unit</label>
-            <select id="downtime-unit">
-              <option value="hours">Hours</option>
-              <option value="days" selected>Days</option>
-              <option value="weeks">Weeks</option>
-            </select>
+
+          <div class="product-panel head-AGO" data-product="AGO" id="panel-AGO">
+            <div class="panel-title AGO">AGO — Automotive Gas Oil (Diesel)</div>
+            <div class="form-group">
+              <label>Volume sold per day (all AGO nozzles) — Litres</label>
+              <input type="number" class="vol-day" data-product="AGO" min="0" step="0.01" placeholder="e.g. 8000" />
+            </div>
+            <div class="form-group">
+              <label>Number of nozzles selling AGO</label>
+              <input type="number" class="nozzles" data-product="AGO" min="1" step="1" value="1" />
+            </div>
+            <div class="form-group">
+              <label>Selling price (KES / Litre)</label>
+              <input type="number" class="price" data-product="AGO" min="0" step="0.01" placeholder="e.g. 175.00" />
+            </div>
+            <div class="form-group">
+              <label>Gross margin (KES / L) — optional</label>
+              <input type="number" class="margin" data-product="AGO" min="0" step="0.01" placeholder="e.g. 7.50" />
+            </div>
+            <div class="auto-box">Auto: <b class="vpn" data-product="AGO">—</b> litres / nozzle / day</div>
           </div>
-          <div class="form-group">
-            <label>Estimated repair / response cost (KES)</label>
-            <input type="number" id="repair-cost" min="0" step="1" placeholder="Optional" />
-            <div class="help">Compare repair cost vs sales loss to show R&amp;M value</div>
+
+          <div class="product-panel head-VPOWER" data-product="V.POWER" id="panel-VPOWER">
+            <div class="panel-title VPOWER">V. POWER — Premium grade</div>
+            <div class="form-group">
+              <label>Volume sold per day (all V.POWER nozzles) — Litres</label>
+              <input type="number" class="vol-day" data-product="V.POWER" min="0" step="0.01" placeholder="e.g. 2500" />
+            </div>
+            <div class="form-group">
+              <label>Number of nozzles selling V. POWER</label>
+              <input type="number" class="nozzles" data-product="V.POWER" min="1" step="1" value="1" />
+            </div>
+            <div class="form-group">
+              <label>Selling price (KES / Litre)</label>
+              <input type="number" class="price" data-product="V.POWER" min="0" step="0.01" placeholder="e.g. 205.00" />
+            </div>
+            <div class="form-group">
+              <label>Gross margin (KES / L) — optional</label>
+              <input type="number" class="margin" data-product="V.POWER" min="0" step="0.01" placeholder="e.g. 12.00" />
+            </div>
+            <div class="auto-box">Auto: <b class="vpn" data-product="V.POWER">—</b> litres / nozzle / day</div>
+          </div>
+
+          <div class="product-panel head-IK" data-product="IK" id="panel-IK">
+            <div class="panel-title IK">IK — Illuminating Kerosene</div>
+            <div class="form-group">
+              <label>Volume sold per day (all IK nozzles) — Litres</label>
+              <input type="number" class="vol-day" data-product="IK" min="0" step="0.01" placeholder="e.g. 1200" />
+            </div>
+            <div class="form-group">
+              <label>Number of nozzles selling IK</label>
+              <input type="number" class="nozzles" data-product="IK" min="1" step="1" value="1" />
+            </div>
+            <div class="form-group">
+              <label>Selling price (KES / Litre)</label>
+              <input type="number" class="price" data-product="IK" min="0" step="0.01" placeholder="e.g. 145.00" />
+            </div>
+            <div class="form-group">
+              <label>Gross margin (KES / L) — optional</label>
+              <input type="number" class="margin" data-product="IK" min="0" step="0.01" placeholder="e.g. 6.00" />
+            </div>
+            <div class="auto-box">Auto: <b class="vpn" data-product="IK">—</b> litres / nozzle / day</div>
           </div>
         </div>
+
         <div class="actions">
           <button type="button" class="btn btn-primary" id="btn-calculate">Calculate Losses</button>
-          <button type="button" class="btn btn-outline" id="btn-reset">Reset defaults</button>
+          <button type="button" class="btn btn-outline" id="btn-reset">Reset</button>
         </div>
       </div>
     </section>
 
-    <!-- TAB 2: RESULTS -->
     <section id="tab-results" class="tab-panel">
-      <div class="card">
-        <h2>Sales Loss Illustration — <span id="result-product">PMS</span></h2>
-        <div id="result-summary" class="help" style="margin-bottom:10px;"></div>
-        <div class="impact-banner" id="impact-banner">
-          <div class="sub">Estimated revenue at risk if this product stream stays offline</div>
-          <div class="big" id="impact-main">—</div>
-          <div class="sub" id="impact-sub">Enter inputs and press Calculate</div>
-        </div>
-        <div class="kpi-row" id="kpi-row">
-          <div class="kpi"><div class="val" id="kpi-min">—</div><div class="lbl">KES / minute</div></div>
-          <div class="kpi"><div class="val" id="kpi-hour">—</div><div class="lbl">KES / hour</div></div>
-          <div class="kpi"><div class="val" id="kpi-day">—</div><div class="lbl">KES / day</div></div>
-          <div class="kpi"><div class="val" id="kpi-month">—</div><div class="lbl">KES / month</div></div>
-        </div>
-        <div style="overflow-x:auto;">
-          <table class="loss-table" id="loss-table">
-            <thead>
-              <tr>
-                <th>Period</th>
-                <th>Sales loss (Litres)</th>
-                <th>Revenue loss (KES)</th>
-                <th>Margin loss (KES)</th>
-              </tr>
-            </thead>
-            <tbody id="loss-tbody">
-              <tr><td colspan="4" style="text-align:center;color:#64748b;">No calculation yet</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="scenario-note" id="compare-note" style="display:none;"></div>
-        <div class="actions">
-          <button type="button" class="btn btn-accent" id="btn-pdf">Share as PDF</button>
-          <button type="button" class="btn btn-outline" id="btn-to-pitch">View R&amp;M pitch →</button>
-        </div>
+      <div class="impact-banner" id="impact-banner">
+        <div class="sub">Combined revenue at risk (selected products)</div>
+        <div class="big" id="impact-main">—</div>
+        <div class="sub" id="impact-sub">Enter inputs and calculate</div>
+      </div>
+      <div class="results-grid cols-1" id="results-grid"></div>
+      <div class="actions">
+        <button type="button" class="btn btn-accent" id="btn-pdf">Share as PDF (1 page)</button>
+        <button type="button" class="btn btn-outline" id="btn-to-pitch">R&amp;M pitch →</button>
       </div>
     </section>
 
-    <!-- TAB 3: SCENARIOS -->
-    <section id="tab-scenarios" class="tab-panel">
-      <div class="card">
-        <h2>Downtime Scenario Comparison</h2>
-        <p class="help" style="margin-bottom:12px;">Shows total loss for common breakdown durations using the same throughput model.</p>
-        <div style="overflow-x:auto;">
-          <table class="loss-table" id="scenario-table">
-            <thead>
-              <tr>
-                <th>Downtime scenario</th>
-                <th>Litres lost</th>
-                <th>Revenue lost (KES)</th>
-                <th>vs Typical repair cost</th>
-              </tr>
-            </thead>
-            <tbody id="scenario-tbody">
-              <tr><td colspan="4" style="text-align:center;color:#64748b;">Calculate first</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="formula-box">
-          Scenarios use continuous effective throughput (open-hours model). Weekend/holiday closures are approximated via operating days/week for weekly+ periods.
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 4: PITCH -->
     <section id="tab-pitch" class="tab-panel">
       <div class="card">
-        <h2>R&amp;M Service Value Narrative (Demo Script)</h2>
-        <div id="pitch-body">
-          <p style="margin-bottom:10px;">Complete the calculator to auto-generate a client-facing narrative.</p>
+        <div class="card-title"><span class="step">3</span> R&amp;M value narrative</div>
+        <div class="pitch-box" id="pitch-body">
+          <p>Calculate losses first to generate the client narrative.</p>
         </div>
         <div class="actions">
-          <button type="button" class="btn btn-accent" id="btn-pdf-2">Share as PDF</button>
+          <button type="button" class="btn btn-accent" id="btn-pdf-2">Share as PDF (1 page)</button>
         </div>
       </div>
     </section>
+
+    <footer class="app-foot">
+      FORECOURT WORKS LIMITED · Demonstration tool for R&amp;M conversations · Illustrative only
+    </footer>
   </div>
 
-  <footer class="app-foot">
-    FORECOURT WORKS LIMITED · Demonstration tool for Reliability &amp; Maintenance service conversations · Not a tax or statutory filing document
-  </footer>
   <div class="toast" id="toast"></div>
   <script src="app.js"></script>
 </body>
