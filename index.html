@@ -4,17 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>FORECOURT WORKS | Dispenser Breakdown Loss Calculator</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
       --navy: #0d478c;
       --navy-dark: #0a3568;
       --accent: #c45c0a;
       --danger: #b91c1c;
+      --danger-dark: #7f1d1d;
       --success: #1a7346;
-      --bg: #eef2f7;
+      --bg: #e8eef5;
       --card: #ffffff;
-      --border: #d0d7e2;
+      --border: #c5d0de;
       --text: #0f172a;
       --muted: #64748b;
       --pms: #0d478c;
@@ -23,371 +23,408 @@
       --ik: #0f766e;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
     body {
       font-family: "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.45;
-      min-height: 100vh;
-      padding-bottom: 48px;
+      line-height: 1.35;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* —— Web header: pure white + new logo —— */
+    /* Compact header */
     .app-header {
-      background: #ffffff;
-      color: var(--text);
+      background: #fff;
       border-bottom: 3px solid var(--navy);
-      padding: 14px 20px 16px;
-      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+      padding: 8px 14px;
+      flex-shrink: 0;
+      box-shadow: 0 1px 6px rgba(15,23,42,0.06);
     }
     .app-header-top {
-      max-width: 1120px;
+      max-width: 1440px;
       margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
+      gap: 12px;
       align-items: center;
       justify-content: space-between;
     }
-    .brand-row {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+    .brand-row { display: flex; gap: 12px; align-items: center; }
     .app-logo {
-      height: 52px;
+      height: 40px;
       width: auto;
-      max-width: 280px;
+      max-width: 200px;
       object-fit: contain;
-      display: block;
     }
-    .company-block { min-width: 200px; }
     .company-name {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       font-weight: 800;
       color: var(--navy);
-      letter-spacing: 0.02em;
     }
     .company-details {
-      font-size: 0.75rem;
+      font-size: 0.68rem;
       color: var(--muted);
-      margin-top: 3px;
-      line-height: 1.35;
+      line-height: 1.25;
     }
     .tagline {
       font-style: italic;
       color: var(--accent);
-      font-size: 0.88rem;
+      font-size: 0.75rem;
       font-weight: 600;
-      margin-top: 4px;
     }
     .doc-badge {
       background: #f8fafc;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 0.72rem;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.68rem;
       color: var(--muted);
       text-align: right;
+      white-space: nowrap;
     }
-    .doc-badge b { color: var(--navy); font-size: 0.8rem; }
+    .doc-badge b { color: var(--navy); font-size: 0.75rem; }
 
-    .wrap { max-width: 1120px; margin: 0 auto; padding: 16px; }
-
-    .hero {
-      background: linear-gradient(105deg, #fff7ed 0%, #ffffff 55%);
-      border: 1px solid #fed7aa;
-      border-left: 5px solid var(--accent);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 14px;
-      font-size: 0.9rem;
-      color: #7c2d12;
-    }
-    .hero strong { color: var(--danger); }
-
-    .tabs {
+    /* Main workspace — fills remaining viewport */
+    .workspace {
+      flex: 1;
+      min-height: 0;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 8px 10px 6px;
       display: flex;
+      flex-direction: column;
       gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-      background: #fff;
-      padding: 8px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      overflow: hidden;
     }
-    .tab-btn {
-      border: none;
-      background: transparent;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.86rem;
-      cursor: pointer;
-      color: var(--muted);
-      font-family: inherit;
-    }
-    .tab-btn.active { background: var(--navy); color: #fff; }
 
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
-    .card {
+    /* Top controls bar */
+    .controls-bar {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 2px 10px rgba(15,23,42,0.04);
+      border-radius: 10px;
+      padding: 8px 10px;
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr auto;
+      gap: 10px;
+      align-items: end;
     }
-    .card-title {
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--navy);
-      margin-bottom: 14px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    @media (max-width: 900px) {
+      .controls-bar { grid-template-columns: 1fr; }
     }
-    .card-title .step {
-      background: var(--navy);
-      color: #fff;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.72rem;
-    }
-
-    label {
+    .ctrl-group label {
       display: block;
-      font-size: 0.72rem;
+      font-size: 0.62rem;
       font-weight: 700;
       color: var(--muted);
-      margin-bottom: 4px;
       text-transform: uppercase;
       letter-spacing: 0.03em;
+      margin-bottom: 2px;
     }
-    .form-group { margin-bottom: 12px; }
+    .ctrl-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .ctrl-row .field { flex: 1; min-width: 90px; }
     input, select {
       width: 100%;
-      padding: 10px 12px;
+      padding: 6px 8px;
       border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.95rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
       font-family: inherit;
       background: #fff;
     }
     input:focus, select:focus {
       outline: none;
       border-color: var(--navy);
-      box-shadow: 0 0 0 3px rgba(13,71,140,0.12);
+      box-shadow: 0 0 0 2px rgba(13,71,140,0.12);
     }
-    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    @media (max-width: 700px) {
-      .row-2, .row-3 { grid-template-columns: 1fr; }
-    }
-    .help { font-size: 0.72rem; color: var(--muted); margin-top: 4px; }
-
     .product-toggle {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 14px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
     }
-    @media (max-width: 600px) { .product-toggle { grid-template-columns: 1fr 1fr; } }
     .p-toggle {
       border: 2px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 8px;
+      border-radius: 8px;
+      padding: 5px 10px;
       text-align: center;
       cursor: pointer;
       background: #fff;
       font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 0.78rem;
       user-select: none;
-      transition: 0.15s;
+      transition: 0.12s;
     }
-    .p-toggle small { display: block; font-weight: 500; font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+    .p-toggle small {
+      display: block;
+      font-weight: 500;
+      font-size: 0.6rem;
+      color: var(--muted);
+    }
     .p-toggle.on-PMS { border-color: var(--pms); background: #e8f1fb; color: var(--pms); }
     .p-toggle.on-AGO { border-color: var(--ago); background: #fff7ed; color: var(--ago); }
     .p-toggle.on-VPOWER { border-color: var(--vpower); background: #f5f3ff; color: var(--vpower); }
     .p-toggle.on-IK { border-color: var(--ik); background: #f0fdfa; color: var(--ik); }
 
-    .product-panels {
-      display: grid;
-      gap: 12px;
-    }
-    .product-panels.cols-1 { grid-template-columns: 1fr; }
-    .product-panels.cols-2 { grid-template-columns: 1fr 1fr; }
-    .product-panels.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
-    @media (max-width: 900px) {
-      .product-panels.cols-2, .product-panels.cols-3 { grid-template-columns: 1fr; }
-    }
-
-    .product-panel {
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
-      background: #fafbfc;
-      display: none;
-    }
-    .product-panel.active { display: block; }
-    .product-panel.head-PMS { border-top: 4px solid var(--pms); }
-    .product-panel.head-AGO { border-top: 4px solid var(--ago); }
-    .product-panel.head-VPOWER { border-top: 4px solid var(--vpower); }
-    .product-panel.head-IK { border-top: 4px solid var(--ik); }
-    .panel-title {
-      font-weight: 800;
-      font-size: 0.95rem;
-      margin-bottom: 10px;
-    }
-    .panel-title.PMS { color: var(--pms); }
-    .panel-title.AGO { color: var(--ago); }
-    .panel-title.VPOWER { color: var(--vpower); }
-    .panel-title.IK { color: var(--ik); }
-
-    .auto-box {
-      background: #fff;
-      border: 1px dashed var(--border);
-      border-radius: 8px;
-      padding: 8px 10px;
-      margin-top: 8px;
-      font-size: 0.82rem;
-    }
-    .auto-box b { color: var(--navy); }
-
-    .site-ops {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 600px) { .site-ops { grid-template-columns: 1fr; } }
-
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      padding: 12px 18px;
+      gap: 4px;
+      padding: 8px 14px;
       border: none;
-      border-radius: 9px;
+      border-radius: 7px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       cursor: pointer;
       font-family: inherit;
+      white-space: nowrap;
     }
     .btn-primary { background: var(--navy); color: #fff; }
     .btn-primary:hover { background: var(--navy-dark); }
-    .btn-accent { background: var(--accent); color: #fff; }
-    .btn-outline { background: #fff; border: 1.5px solid var(--border); color: var(--text); }
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-
-    .impact-banner {
-      background: linear-gradient(135deg, #7f1d1d, #b91c1c);
-      color: #fff;
-      border-radius: 14px;
-      padding: 18px 16px;
-      text-align: center;
-      margin-bottom: 14px;
-    }
-    .impact-banner .big { font-size: 1.65rem; font-weight: 900; }
-    .impact-banner .sub { opacity: 0.92; font-size: 0.88rem; margin-top: 4px; }
-
-    .results-grid {
-      display: grid;
-      gap: 12px;
-    }
-    .results-grid.cols-1 { grid-template-columns: 1fr; }
-    .results-grid.cols-2 { grid-template-columns: 1fr 1fr; }
-    .results-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
-    @media (max-width: 900px) {
-      .results-grid.cols-2, .results-grid.cols-3 { grid-template-columns: 1fr; }
-    }
-
-    .result-col {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
+    .btn-outline {
       background: #fff;
+      border: 1.5px solid var(--border);
+      color: var(--text);
     }
-    .result-col .col-head {
-      padding: 10px 12px;
-      color: #fff;
+
+    /* Three-column comparison */
+    .three-cols {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.15fr;
+      gap: 8px;
+      overflow: hidden;
+    }
+    @media (max-width: 1000px) {
+      html, body { overflow: auto; height: auto; }
+      .three-cols { grid-template-columns: 1fr; overflow: visible; }
+      .workspace { overflow: auto; }
+    }
+
+    .col {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .col-head {
+      padding: 8px 10px;
       font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .result-col .col-head.PMS { background: var(--pms); }
-    .result-col .col-head.AGO { background: var(--ago); }
-    .result-col .col-head.VPOWER { background: var(--vpower); }
-    .result-col .col-head.IK { background: var(--ik); }
-    .result-col table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-    .result-col th, .result-col td {
-      padding: 7px 8px;
+    .col-full .col-head { background: var(--success); }
+    .col-break .col-head { background: var(--danger); }
+    .col-interp .col-head { background: linear-gradient(90deg, var(--danger-dark), var(--accent)); }
+    .col-body {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 8px;
+    }
+
+    /* Product input cards inside columns */
+    .prod-card {
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 6px;
+      overflow: hidden;
+    }
+    .prod-card:last-child { margin-bottom: 0; }
+    .prod-card .pc-head {
+      padding: 4px 8px;
+      font-weight: 800;
+      font-size: 0.75rem;
+      color: #fff;
+    }
+    .prod-card.PMS .pc-head { background: var(--pms); }
+    .prod-card.AGO .pc-head { background: var(--ago); }
+    .prod-card.VPOWER .pc-head { background: var(--vpower); }
+    .prod-card.IK .pc-head { background: var(--ik); }
+    .prod-card .pc-body { padding: 6px 8px; }
+    .pc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+    .pc-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+    .pc-grid label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 1px;
+      display: block;
+    }
+    .pc-grid input { padding: 4px 6px; font-size: 0.8rem; }
+    .vpn-line {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .vpn-line b { color: var(--navy); }
+
+    /* Revenue summary boxes */
+    .rev-summary {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .col-break .rev-summary {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+    .rev-summary .big {
+      font-size: 1.25rem;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+    .col-full .rev-summary .big { color: var(--success); }
+    .col-break .rev-summary .big { color: var(--danger); }
+    .rev-summary .sub {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Tables */
+    table.mini {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.72rem;
+    }
+    table.mini th, table.mini td {
+      padding: 3px 5px;
       border-bottom: 1px solid #eef2f7;
       text-align: right;
     }
-    .result-col th:first-child, .result-col td:first-child { text-align: left; font-weight: 600; }
-    .result-col .kes { color: var(--danger); font-weight: 800; }
-    .result-col .liters { color: var(--navy); font-weight: 700; }
-    .result-col .meta {
-      padding: 8px 10px;
-      font-size: 0.75rem;
+    table.mini th:first-child, table.mini td:first-child {
+      text-align: left;
+      font-weight: 600;
+    }
+    table.mini th {
+      background: #f1f5f9;
+      font-size: 0.62rem;
+      text-transform: uppercase;
       color: var(--muted);
-      background: #f8fafc;
-      border-top: 1px solid var(--border);
     }
+    table.mini .kes { font-weight: 700; color: var(--navy); }
+    table.mini .loss { font-weight: 800; color: var(--danger); }
 
-    .pitch-box {
-      background: #f8fafc;
-      border-radius: 10px;
-      padding: 14px;
-      font-size: 0.9rem;
+    /* Interpretation dramatic panel */
+    .loss-hero {
+      background: linear-gradient(135deg, #7f1d1d, #b91c1c);
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 6px;
     }
-    .pitch-box ul { margin: 8px 0 8px 18px; }
+    .loss-hero .big {
+      font-size: 1.35rem;
+      font-weight: 900;
+    }
+    .loss-hero .sub {
+      font-size: 0.72rem;
+      opacity: 0.92;
+      margin-top: 2px;
+    }
+    .loss-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+    .loss-chip {
+      background: #fff;
+      border: 1px solid #fecaca;
+      border-radius: 6px;
+      padding: 5px 6px;
+      text-align: center;
+    }
+    .loss-chip .period {
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .loss-chip .val {
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: var(--danger);
+      line-height: 1.15;
+    }
+    .loss-chip.highlight {
+      background: #fef2f2;
+      border-color: var(--danger);
+      grid-column: 1 / -1;
+    }
+    .loss-chip.highlight .val { font-size: 1.05rem; }
 
-    footer.app-foot {
+    .interp-note {
+      font-size: 0.72rem;
+      color: var(--text);
+      background: #fff7ed;
+      border-left: 3px solid var(--accent);
+      padding: 6px 8px;
+      margin-top: 6px;
+      border-radius: 0 6px 6px 0;
+    }
+    .interp-note strong { color: var(--danger); }
+
+    .empty-state {
       text-align: center;
       color: var(--muted);
-      font-size: 0.72rem;
-      margin-top: 20px;
+      padding: 20px 10px;
+      font-size: 0.8rem;
     }
+
     .toast {
       position: fixed;
-      bottom: 22px;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       background: #0f172a;
       color: #fff;
-      padding: 12px 18px;
+      padding: 10px 16px;
       border-radius: 8px;
-      font-size: 0.86rem;
+      font-size: 0.82rem;
       z-index: 200;
       display: none;
-      max-width: 92%;
+      max-width: 90%;
     }
     .toast.show { display: block; }
     .toast.success { background: var(--success); }
     .toast.error { background: var(--danger); }
 
-    .limit-note {
-      font-size: 0.78rem;
+    .footer-mini {
+      text-align: center;
+      font-size: 0.62rem;
       color: var(--muted);
-      margin-top: 6px;
+      padding: 2px 0 4px;
+      flex-shrink: 0;
     }
-    .limit-note.warn { color: var(--accent); font-weight: 600; }
   </style>
 </head>
 <body>
@@ -395,209 +432,95 @@
     <div class="app-header-top">
       <div class="brand-row">
         <img src="forecourt-logo-banner.png" alt="FORECOURT-SWL" class="app-logo" />
-        <div class="company-block">
+        <div>
           <div class="company-name">FORECOURT WORKS LIMITED</div>
-          <div class="company-details">
-            Ramco Court, GT 3B, South C, Nairobi<br/>
-            +(254) 729-002-087 · sales@forecourtworks.co.ke · www.forecourtworks.co.ke
-          </div>
+          <div class="company-details">Ramco Court, GT 3B, South C, Nairobi · +(254) 729-002-087 · sales@forecourtworks.co.ke</div>
           <div class="tagline">Engineering Reliability Into Every Forecourt</div>
         </div>
       </div>
       <div class="doc-badge">
         <div><b>BREAKDOWN LOSS CALCULATOR</b></div>
-        <div>Doc: FSW-DEMO-LOSS-01 · Rev Sep 2026</div>
+        <div>FSW-DEMO-LOSS-01 · Rev Oct 2026</div>
       </div>
     </div>
   </header>
 
-  <div class="wrap">
-    <div class="hero">
-      <strong>Client demo tool:</strong> Enter real daily volumes per product. The app shows sales loss in litres and KES when nozzles are down —
-      so the cost of delay is impossible to ignore. Select up to <b>3 products</b> at once for multi-grade islands.
-    </div>
-
-    <div class="tabs">
-      <button type="button" class="tab-btn active" data-tab="inputs">1. Inputs</button>
-      <button type="button" class="tab-btn" data-tab="results">2. Loss Results</button>
-      <button type="button" class="tab-btn" data-tab="pitch">3. R&amp;M Pitch</button>
-    </div>
-
-    <section id="tab-inputs" class="tab-panel active">
-      <div class="card">
-        <div class="card-title"><span class="step">1</span> Client &amp; operating profile</div>
-        <div class="row-2">
-          <div class="form-group">
-            <label>Client / Station name</label>
-            <input type="text" id="client-name" class="auto-caps" placeholder="e.g. AINUSHAMSI ENERGY" />
+  <div class="workspace">
+    <!-- Controls -->
+    <div class="controls-bar">
+      <div>
+        <div class="ctrl-row" style="margin-bottom:6px;">
+          <div class="field">
+            <label>Client / Station</label>
+            <input type="text" id="client-name" placeholder="e.g. AINUSHAMSI ENERGY" />
           </div>
-          <div class="form-group">
-            <label>Site location</label>
-            <input type="text" id="site-location" class="auto-caps" placeholder="e.g. SOUTH C" />
+          <div class="field">
+            <label>Site</label>
+            <input type="text" id="site-location" placeholder="e.g. SOUTH C" />
           </div>
         </div>
-        <div class="row-2">
-          <div class="form-group">
-            <label>Prepared by (FSW)</label>
-            <input type="text" id="prepared-by" class="auto-caps" placeholder="Name" />
-          </div>
-          <div class="form-group">
-            <label>Date</label>
-            <input type="date" id="calc-date" />
-            <div class="help" id="date-hint"></div>
-          </div>
-        </div>
-        <div class="site-ops">
-          <div class="form-group">
-            <label>Operating hours / day</label>
+        <div class="ctrl-row">
+          <div class="field" style="max-width:90px;">
+            <label>Hrs / day</label>
             <input type="number" id="hours-day" min="1" max="24" step="0.5" value="18" />
           </div>
-          <div class="form-group">
-            <label>Operating days / week</label>
+          <div class="field" style="max-width:90px;">
+            <label>Days / wk</label>
             <input type="number" id="days-week" min="1" max="7" step="1" value="7" />
           </div>
-          <div class="form-group">
-            <label>Est. repair cost (KES) — optional</label>
-            <input type="number" id="repair-cost" min="0" step="1" placeholder="e.g. 45000" />
+          <div class="field" style="max-width:110px;">
+            <label>Date</label>
+            <input type="date" id="calc-date" />
           </div>
         </div>
       </div>
-
-      <div class="card">
-        <div class="card-title"><span class="step">2</span> Select products (1–3 maximum)</div>
+      <div>
+        <label style="display:block;font-size:0.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:2px;">Products (select 1–3)</label>
         <div class="product-toggle" id="product-toggle">
           <div class="p-toggle" data-product="PMS">PMS<small>Petrol</small></div>
           <div class="p-toggle" data-product="AGO">AGO<small>Diesel</small></div>
-          <div class="p-toggle" data-product="V.POWER">V. POWER<small>Premium</small></div>
+          <div class="p-toggle" data-product="V.POWER">V.POWER<small>Premium</small></div>
           <div class="p-toggle" data-product="IK">IK<small>Kerosene</small></div>
         </div>
-        <div class="limit-note" id="limit-note">Select at least one product. Maximum 3 at the same time.</div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <button type="button" class="btn btn-primary" id="btn-calc">Calculate Losses</button>
+        <button type="button" class="btn btn-outline" id="btn-reset">Reset</button>
+      </div>
+    </div>
 
-        <div class="product-panels cols-1" id="product-panels">
-          <!-- panels injected / shown by JS -->
-          <div class="product-panel head-PMS" data-product="PMS" id="panel-PMS">
-            <div class="panel-title PMS">PMS — Petrol / Motor Spirit</div>
-            <div class="form-group">
-              <label>Volume sold per day (all PMS nozzles) — Litres</label>
-              <input type="number" class="vol-day" data-product="PMS" min="0" step="0.01" placeholder="e.g. 6000" />
-            </div>
-            <div class="form-group">
-              <label>Number of nozzles selling PMS</label>
-              <input type="number" class="nozzles" data-product="PMS" min="1" step="1" value="1" />
-            </div>
-            <div class="form-group">
-              <label>Selling price (KES / Litre)</label>
-              <input type="number" class="price" data-product="PMS" min="0" step="0.01" placeholder="e.g. 189.50" />
-            </div>
-            <div class="form-group">
-              <label>Gross margin (KES / L) — optional</label>
-              <input type="number" class="margin" data-product="PMS" min="0" step="0.01" placeholder="e.g. 8.00" />
-            </div>
-            <div class="auto-box">Auto: <b class="vpn" data-product="PMS">—</b> litres / nozzle / day</div>
-          </div>
-
-          <div class="product-panel head-AGO" data-product="AGO" id="panel-AGO">
-            <div class="panel-title AGO">AGO — Automotive Gas Oil (Diesel)</div>
-            <div class="form-group">
-              <label>Volume sold per day (all AGO nozzles) — Litres</label>
-              <input type="number" class="vol-day" data-product="AGO" min="0" step="0.01" placeholder="e.g. 8000" />
-            </div>
-            <div class="form-group">
-              <label>Number of nozzles selling AGO</label>
-              <input type="number" class="nozzles" data-product="AGO" min="1" step="1" value="1" />
-            </div>
-            <div class="form-group">
-              <label>Selling price (KES / Litre)</label>
-              <input type="number" class="price" data-product="AGO" min="0" step="0.01" placeholder="e.g. 175.00" />
-            </div>
-            <div class="form-group">
-              <label>Gross margin (KES / L) — optional</label>
-              <input type="number" class="margin" data-product="AGO" min="0" step="0.01" placeholder="e.g. 7.50" />
-            </div>
-            <div class="auto-box">Auto: <b class="vpn" data-product="AGO">—</b> litres / nozzle / day</div>
-          </div>
-
-          <div class="product-panel head-VPOWER" data-product="V.POWER" id="panel-VPOWER">
-            <div class="panel-title VPOWER">V. POWER — Premium grade</div>
-            <div class="form-group">
-              <label>Volume sold per day (all V.POWER nozzles) — Litres</label>
-              <input type="number" class="vol-day" data-product="V.POWER" min="0" step="0.01" placeholder="e.g. 2500" />
-            </div>
-            <div class="form-group">
-              <label>Number of nozzles selling V. POWER</label>
-              <input type="number" class="nozzles" data-product="V.POWER" min="1" step="1" value="1" />
-            </div>
-            <div class="form-group">
-              <label>Selling price (KES / Litre)</label>
-              <input type="number" class="price" data-product="V.POWER" min="0" step="0.01" placeholder="e.g. 205.00" />
-            </div>
-            <div class="form-group">
-              <label>Gross margin (KES / L) — optional</label>
-              <input type="number" class="margin" data-product="V.POWER" min="0" step="0.01" placeholder="e.g. 12.00" />
-            </div>
-            <div class="auto-box">Auto: <b class="vpn" data-product="V.POWER">—</b> litres / nozzle / day</div>
-          </div>
-
-          <div class="product-panel head-IK" data-product="IK" id="panel-IK">
-            <div class="panel-title IK">IK — Illuminating Kerosene</div>
-            <div class="form-group">
-              <label>Volume sold per day (all IK nozzles) — Litres</label>
-              <input type="number" class="vol-day" data-product="IK" min="0" step="0.01" placeholder="e.g. 1200" />
-            </div>
-            <div class="form-group">
-              <label>Number of nozzles selling IK</label>
-              <input type="number" class="nozzles" data-product="IK" min="1" step="1" value="1" />
-            </div>
-            <div class="form-group">
-              <label>Selling price (KES / Litre)</label>
-              <input type="number" class="price" data-product="IK" min="0" step="0.01" placeholder="e.g. 145.00" />
-            </div>
-            <div class="form-group">
-              <label>Gross margin (KES / L) — optional</label>
-              <input type="number" class="margin" data-product="IK" min="0" step="0.01" placeholder="e.g. 6.00" />
-            </div>
-            <div class="auto-box">Auto: <b class="vpn" data-product="IK">—</b> litres / nozzle / day</div>
-          </div>
-        </div>
-
-        <div class="actions">
-          <button type="button" class="btn btn-primary" id="btn-calculate">Calculate Losses</button>
-          <button type="button" class="btn btn-outline" id="btn-reset">Reset</button>
+    <!-- THREE COLUMNS -->
+    <div class="three-cols">
+      <!-- COL 1: Full capacity -->
+      <div class="col col-full">
+        <div class="col-head">Revenue at Full Assets Capacity</div>
+        <div class="col-body" id="col-full-body">
+          <div class="empty-state">Select product(s) and enter volumes, nozzles &amp; price. Then calculate.</div>
         </div>
       </div>
-    </section>
 
-    <section id="tab-results" class="tab-panel">
-      <div class="impact-banner" id="impact-banner">
-        <div class="sub">Combined revenue at risk (selected products)</div>
-        <div class="big" id="impact-main">—</div>
-        <div class="sub" id="impact-sub">Enter inputs and calculate</div>
-      </div>
-      <div class="results-grid cols-1" id="results-grid"></div>
-      <div class="actions">
-        <button type="button" class="btn btn-accent" id="btn-pdf">Share as PDF (1 page)</button>
-        <button type="button" class="btn btn-outline" id="btn-to-pitch">R&amp;M pitch →</button>
-      </div>
-    </section>
-
-    <section id="tab-pitch" class="tab-panel">
-      <div class="card">
-        <div class="card-title"><span class="step">3</span> R&amp;M value narrative</div>
-        <div class="pitch-box" id="pitch-body">
-          <p>Calculate losses first to generate the client narrative.</p>
-        </div>
-        <div class="actions">
-          <button type="button" class="btn btn-accent" id="btn-pdf-2">Share as PDF (1 page)</button>
+      <!-- COL 2: With breakdown -->
+      <div class="col col-break">
+        <div class="col-head">Revenue with Breakdown</div>
+        <div class="col-body" id="col-break-body">
+          <div class="empty-state">Enter how many nozzles are out of service per product, then calculate.</div>
         </div>
       </div>
-    </section>
 
-    <footer class="app-foot">
-      FORECOURT WORKS LIMITED · Demonstration tool for R&amp;M conversations · Illustrative only
-    </footer>
+      <!-- COL 3: Interpretation -->
+      <div class="col col-interp">
+        <div class="col-head">Loss Interpretation — Cost of Delay</div>
+        <div class="col-body" id="col-interp-body">
+          <div class="empty-state">The difference between full capacity and breakdown appears here — second by second, year by year.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-mini">FORECOURT WORKS LTD · Preventive R&amp;M stops these losses before the island goes quiet · www.forecourtworks.co.ke</div>
   </div>
 
   <div class="toast" id="toast"></div>
+
   <script src="app.js"></script>
 </body>
 </html>
