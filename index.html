@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FORECOURT WORKS | Dispenser Breakdown Loss Calculator</title>
   <style>
     :root {
@@ -11,182 +11,198 @@
       --accent: #c45c0a;
       --danger: #b91c1c;
       --danger-dark: #7f1d1d;
-      --success: #1a7346;
-      --bg: #e8eef5;
+      --success: #157a3f;
+      --bg: #eef2f7;
       --card: #ffffff;
-      --border: #c5d0de;
+      --border: #d0d7e2;
       --text: #0f172a;
       --muted: #64748b;
       --pms: #0d478c;
       --ago: #b45309;
       --vpower: #6d28d9;
       --ik: #0f766e;
+      --pms-soft: #e8f1fb;
+      --ago-soft: #fff7ed;
+      --vpower-soft: #f5f3ff;
+      --ik-soft: #f0fdfa;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
-      height: 100%;
-      overflow: hidden;
-    }
     body {
       font-family: "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.35;
-      font-size: 13px;
-      display: flex;
-      flex-direction: column;
+      line-height: 1.45;
+      font-size: 15px;
+      min-height: 100vh;
+      padding-bottom: 32px;
     }
 
-    /* Compact header */
+    /* ── Header ── */
     .app-header {
       background: #fff;
       border-bottom: 3px solid var(--navy);
-      padding: 8px 14px;
-      flex-shrink: 0;
-      box-shadow: 0 1px 6px rgba(15,23,42,0.06);
+      padding: 14px 20px;
+      box-shadow: 0 2px 8px rgba(15,23,42,0.06);
     }
-    .app-header-top {
-      max-width: 1440px;
+    .app-header-inner {
+      max-width: 1100px;
       margin: 0 auto;
       display: flex;
-      gap: 12px;
+      gap: 16px;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
     }
-    .brand-row { display: flex; gap: 12px; align-items: center; }
+    .brand-row { display: flex; gap: 14px; align-items: center; }
     .app-logo {
-      height: 40px;
+      height: 48px;
       width: auto;
-      max-width: 200px;
+      max-width: 220px;
       object-fit: contain;
     }
     .company-name {
-      font-size: 0.95rem;
+      font-size: 1.1rem;
       font-weight: 800;
       color: var(--navy);
     }
     .company-details {
-      font-size: 0.68rem;
+      font-size: 0.78rem;
       color: var(--muted);
-      line-height: 1.25;
+      line-height: 1.35;
+      margin-top: 2px;
     }
     .tagline {
       font-style: italic;
       color: var(--accent);
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       font-weight: 600;
+      margin-top: 2px;
     }
     .doc-badge {
       background: #f8fafc;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 6px 10px;
-      font-size: 0.68rem;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.78rem;
       color: var(--muted);
       text-align: right;
-      white-space: nowrap;
     }
-    .doc-badge b { color: var(--navy); font-size: 0.75rem; }
+    .doc-badge b { color: var(--navy); font-size: 0.88rem; display: block; }
 
-    /* Main workspace — fills remaining viewport */
-    .workspace {
-      flex: 1;
-      min-height: 0;
-      max-width: 1440px;
-      width: 100%;
+    /* ── Main ── */
+    .wrap {
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 8px 10px 6px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      overflow: hidden;
+      padding: 18px 16px;
     }
 
-    /* Top controls bar */
-    .controls-bar {
+    /* ── Site controls card ── */
+    .site-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 8px 10px;
-      flex-shrink: 0;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(15,23,42,0.04);
+    }
+    .site-card h2 {
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .site-grid {
       display: grid;
-      grid-template-columns: 1.4fr 1fr auto;
-      gap: 10px;
-      align-items: end;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
     }
-    @media (max-width: 900px) {
-      .controls-bar { grid-template-columns: 1fr; }
+    @media (max-width: 800px) {
+      .site-grid { grid-template-columns: 1fr 1fr; }
     }
-    .ctrl-group label {
+    label {
       display: block;
-      font-size: 0.62rem;
+      font-size: 0.72rem;
       font-weight: 700;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.03em;
-      margin-bottom: 2px;
+      margin-bottom: 5px;
     }
-    .ctrl-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .ctrl-row .field { flex: 1; min-width: 90px; }
     input, select {
       width: 100%;
-      padding: 6px 8px;
+      padding: 10px 12px;
       border: 1.5px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.85rem;
+      border-radius: 8px;
+      font-size: 1rem;
       font-family: inherit;
       background: #fff;
     }
-    input:focus, select:focus {
+    input:focus {
       outline: none;
       border-color: var(--navy);
-      box-shadow: 0 0 0 2px rgba(13,71,140,0.12);
+      box-shadow: 0 0 0 3px rgba(13,71,140,0.12);
     }
+
+    /* Product toggles */
+    .product-row {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid #e2e8f0;
+    }
+    .product-row > label { margin-bottom: 8px; }
     .product-toggle {
       display: flex;
-      gap: 6px;
+      gap: 10px;
       flex-wrap: wrap;
     }
     .p-toggle {
       border: 2px solid var(--border);
-      border-radius: 8px;
-      padding: 5px 10px;
+      border-radius: 12px;
+      padding: 12px 18px;
       text-align: center;
       cursor: pointer;
       background: #fff;
       font-weight: 800;
-      font-size: 0.78rem;
+      font-size: 1rem;
       user-select: none;
-      transition: 0.12s;
+      transition: 0.15s;
+      min-width: 100px;
     }
     .p-toggle small {
       display: block;
       font-weight: 500;
-      font-size: 0.6rem;
+      font-size: 0.75rem;
       color: var(--muted);
+      margin-top: 2px;
     }
-    .p-toggle.on-PMS { border-color: var(--pms); background: #e8f1fb; color: var(--pms); }
-    .p-toggle.on-AGO { border-color: var(--ago); background: #fff7ed; color: var(--ago); }
-    .p-toggle.on-VPOWER { border-color: var(--vpower); background: #f5f3ff; color: var(--vpower); }
-    .p-toggle.on-IK { border-color: var(--ik); background: #f0fdfa; color: var(--ik); }
+    .p-toggle:hover { border-color: #94a3b8; }
+    .p-toggle.on-PMS { border-color: var(--pms); background: var(--pms-soft); color: var(--pms); }
+    .p-toggle.on-AGO { border-color: var(--ago); background: var(--ago-soft); color: var(--ago); }
+    .p-toggle.on-VPOWER { border-color: var(--vpower); background: var(--vpower-soft); color: var(--vpower); }
+    .p-toggle.on-IK { border-color: var(--ik); background: var(--ik-soft); color: var(--ik); }
 
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-      padding: 8px 14px;
+      gap: 6px;
+      padding: 12px 22px;
       border: none;
-      border-radius: 7px;
+      border-radius: 10px;
       font-weight: 700;
-      font-size: 0.82rem;
+      font-size: 1rem;
       cursor: pointer;
       font-family: inherit;
-      white-space: nowrap;
     }
     .btn-primary { background: var(--navy); color: #fff; }
     .btn-primary:hover { background: var(--navy-dark); }
@@ -195,241 +211,284 @@
       border: 1.5px solid var(--border);
       color: var(--text);
     }
+    .btn-outline:hover { background: #f8fafc; }
 
-    /* Three-column comparison */
-    .three-cols {
-      flex: 1;
-      min-height: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1.15fr;
-      gap: 8px;
+    /* ── Product block (vertical stack) ── */
+    .product-block {
+      margin-bottom: 28px;
+      border-radius: 16px;
       overflow: hidden;
-    }
-    @media (max-width: 1000px) {
-      html, body { overflow: auto; height: auto; }
-      .three-cols { grid-template-columns: 1fr; overflow: visible; }
-      .workspace { overflow: auto; }
-    }
-
-    .col {
+      box-shadow: 0 4px 16px rgba(15,23,42,0.08);
+      border: 2px solid var(--border);
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      overflow: hidden;
     }
-    .col-head {
-      padding: 8px 10px;
-      font-weight: 800;
-      font-size: 0.78rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+    .product-block.PMS { border-color: var(--pms); }
+    .product-block.AGO { border-color: var(--ago); }
+    .product-block.VPOWER { border-color: var(--vpower); }
+    .product-block.IK { border-color: var(--ik); }
+
+    .product-block-head {
+      padding: 14px 20px;
       color: #fff;
-      flex-shrink: 0;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
     }
-    .col-full .col-head { background: var(--success); }
-    .col-break .col-head { background: var(--danger); }
-    .col-interp .col-head { background: linear-gradient(90deg, var(--danger-dark), var(--accent)); }
-    .col-body {
-      flex: 1;
-      min-height: 0;
-      overflow: auto;
-      padding: 8px;
+    .product-block.PMS .product-block-head { background: var(--pms); }
+    .product-block.AGO .product-block-head { background: var(--ago); }
+    .product-block.VPOWER .product-block-head { background: var(--vpower); }
+    .product-block.IK .product-block-head { background: var(--ik); }
+    .product-block-head .badge {
+      background: rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
     }
 
-    /* Product input cards inside columns */
-    .prod-card {
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 6px;
-      overflow: hidden;
-    }
-    .prod-card:last-child { margin-bottom: 0; }
-    .prod-card .pc-head {
-      padding: 4px 8px;
-      font-weight: 800;
-      font-size: 0.75rem;
-      color: #fff;
-    }
-    .prod-card.PMS .pc-head { background: var(--pms); }
-    .prod-card.AGO .pc-head { background: var(--ago); }
-    .prod-card.VPOWER .pc-head { background: var(--vpower); }
-    .prod-card.IK .pc-head { background: var(--ik); }
-    .prod-card .pc-body { padding: 6px 8px; }
-    .pc-grid {
+    /* Two columns: Full | Breakdown */
+    .cols-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 5px;
+      gap: 0;
     }
-    .pc-grid.three { grid-template-columns: 1fr 1fr 1fr; }
-    .pc-grid label {
-      font-size: 0.58rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 1px;
-      display: block;
+    @media (max-width: 720px) {
+      .cols-2 { grid-template-columns: 1fr; }
     }
-    .pc-grid input { padding: 4px 6px; font-size: 0.8rem; }
-    .vpn-line {
-      font-size: 0.7rem;
-      color: var(--muted);
-      margin-top: 4px;
+    .col-pane {
+      padding: 18px 20px;
     }
-    .vpn-line b { color: var(--navy); }
-
-    /* Revenue summary boxes */
-    .rev-summary {
+    .col-pane.full {
       background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: 8px;
-      padding: 8px;
-      margin-bottom: 6px;
+      border-right: 1px solid #bbf7d0;
+    }
+    .col-pane.break {
+      background: #fef2f2;
+    }
+    @media (max-width: 720px) {
+      .col-pane.full { border-right: none; border-bottom: 1px solid #bbf7d0; }
+    }
+    .col-pane h3 {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 14px;
+    }
+    .col-pane.full h3 { color: var(--success); }
+    .col-pane.break h3 { color: var(--danger); }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .input-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 500px) {
+      .input-grid, .input-grid.three { grid-template-columns: 1fr; }
+    }
+    .hint {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .hint b { color: var(--navy); font-size: 0.95rem; }
+
+    .rev-box {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 10px;
       text-align: center;
     }
-    .col-break .rev-summary {
-      background: #fef2f2;
-      border-color: #fecaca;
+    .col-pane.full .rev-box {
+      background: #fff;
+      border: 2px solid #86efac;
     }
-    .rev-summary .big {
-      font-size: 1.25rem;
+    .col-pane.break .rev-box {
+      background: #fff;
+      border: 2px solid #fca5a5;
+    }
+    .rev-box .amount {
+      font-size: 1.5rem;
       font-weight: 900;
       line-height: 1.2;
     }
-    .col-full .rev-summary .big { color: var(--success); }
-    .col-break .rev-summary .big { color: var(--danger); }
-    .rev-summary .sub {
-      font-size: 0.7rem;
+    .col-pane.full .rev-box .amount { color: var(--success); }
+    .col-pane.break .rev-box .amount { color: var(--danger); }
+    .rev-box .sub {
+      font-size: 0.85rem;
       color: var(--muted);
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
-    /* Tables */
-    table.mini {
+    .mini-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.72rem;
+      margin-top: 12px;
+      font-size: 0.9rem;
     }
-    table.mini th, table.mini td {
-      padding: 3px 5px;
-      border-bottom: 1px solid #eef2f7;
+    .mini-table th, .mini-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #e2e8f0;
       text-align: right;
     }
-    table.mini th:first-child, table.mini td:first-child {
+    .mini-table th:first-child, .mini-table td:first-child {
       text-align: left;
       font-weight: 600;
     }
-    table.mini th {
-      background: #f1f5f9;
-      font-size: 0.62rem;
+    .mini-table th {
+      background: rgba(0,0,0,0.04);
+      font-size: 0.72rem;
       text-transform: uppercase;
       color: var(--muted);
+      letter-spacing: 0.03em;
     }
-    table.mini .kes { font-weight: 700; color: var(--navy); }
-    table.mini .loss { font-weight: 800; color: var(--danger); }
+    .mini-table .kes { font-weight: 700; color: var(--navy); }
 
-    /* Interpretation dramatic panel */
-    .loss-hero {
-      background: linear-gradient(135deg, #7f1d1d, #b91c1c);
+    /* Full-width interpretation under product */
+    .interp-bar {
+      background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #c2410c 100%);
       color: #fff;
-      border-radius: 8px;
-      padding: 10px;
-      text-align: center;
-      margin-bottom: 6px;
+      padding: 18px 20px 20px;
     }
-    .loss-hero .big {
-      font-size: 1.35rem;
+    .interp-bar .interp-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.9;
+      margin-bottom: 10px;
+    }
+    .interp-hero {
+      font-size: 1.6rem;
       font-weight: 900;
+      margin-bottom: 4px;
     }
-    .loss-hero .sub {
-      font-size: 0.72rem;
+    .interp-sub {
+      font-size: 0.95rem;
       opacity: 0.92;
-      margin-top: 2px;
+      margin-bottom: 16px;
     }
-    .loss-grid {
+    .loss-chips {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+    @media (max-width: 800px) {
+      .loss-chips { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .loss-chips { grid-template-columns: 1fr 1fr; }
     }
     .loss-chip {
-      background: #fff;
-      border: 1px solid #fecaca;
-      border-radius: 6px;
-      padding: 5px 6px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 10px;
+      padding: 10px 8px;
       text-align: center;
+    }
+    .loss-chip.wide {
+      grid-column: span 1;
+      background: rgba(255,255,255,0.22);
+      border-color: rgba(255,255,255,0.4);
     }
     .loss-chip .period {
-      font-size: 0.58rem;
+      font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
-      color: var(--muted);
+      opacity: 0.85;
+      margin-bottom: 4px;
     }
     .loss-chip .val {
-      font-size: 0.85rem;
+      font-size: 1.05rem;
       font-weight: 900;
-      color: var(--danger);
-      line-height: 1.15;
     }
-    .loss-chip.highlight {
-      background: #fef2f2;
-      border-color: var(--danger);
-      grid-column: 1 / -1;
+    .per-nozzle {
+      margin-top: 14px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      line-height: 1.4;
     }
-    .loss-chip.highlight .val { font-size: 1.05rem; }
+    .per-nozzle strong { color: #fef08a; }
 
-    .interp-note {
-      font-size: 0.72rem;
-      color: var(--text);
-      background: #fff7ed;
-      border-left: 3px solid var(--accent);
-      padding: 6px 8px;
-      margin-top: 6px;
-      border-radius: 0 6px 6px 0;
-    }
-    .interp-note strong { color: var(--danger); }
-
-    .empty-state {
+    /* Empty / placeholder */
+    .empty-msg {
       text-align: center;
       color: var(--muted);
-      padding: 20px 10px;
+      padding: 48px 20px;
+      font-size: 1.05rem;
+      background: var(--card);
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+    }
+    .empty-msg strong { color: var(--navy); }
+
+    /* Combined total strip (when 2+ products) */
+    .combined-strip {
+      background: #0f172a;
+      color: #fff;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .combined-strip .label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.8;
+      margin-bottom: 6px;
+    }
+    .combined-strip .big {
+      font-size: 1.75rem;
+      font-weight: 900;
+    }
+    .combined-strip .detail {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      margin-top: 6px;
+    }
+
+    footer.app-foot {
+      text-align: center;
+      color: var(--muted);
       font-size: 0.8rem;
+      margin-top: 12px;
+      padding: 0 16px;
     }
 
     .toast {
       position: fixed;
-      bottom: 16px;
+      bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
       background: #0f172a;
       color: #fff;
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-size: 0.82rem;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 0.95rem;
       z-index: 200;
       display: none;
-      max-width: 90%;
+      max-width: 92%;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     }
     .toast.show { display: block; }
     .toast.success { background: var(--success); }
     .toast.error { background: var(--danger); }
-
-    .footer-mini {
-      text-align: center;
-      font-size: 0.62rem;
-      color: var(--muted);
-      padding: 2px 0 4px;
-      flex-shrink: 0;
-    }
   </style>
 </head>
 <body>
   <header class="app-header">
-    <div class="app-header-top">
+    <div class="app-header-inner">
       <div class="brand-row">
         <img src="forecourt-logo-banner.png" alt="FORECOURT-SWL" class="app-logo" />
         <div>
@@ -439,43 +498,37 @@
         </div>
       </div>
       <div class="doc-badge">
-        <div><b>BREAKDOWN LOSS CALCULATOR</b></div>
-        <div>FSW-DEMO-LOSS-01 · Rev Oct 2026</div>
+        <b>BREAKDOWN LOSS CALCULATOR</b>
+        FSW-DEMO-LOSS-01 · Rev Oct 2026
       </div>
     </div>
   </header>
 
-  <div class="workspace">
-    <!-- Controls -->
-    <div class="controls-bar">
-      <div>
-        <div class="ctrl-row" style="margin-bottom:6px;">
-          <div class="field">
-            <label>Client / Station</label>
-            <input type="text" id="client-name" placeholder="e.g. AINUSHAMSI ENERGY" />
-          </div>
-          <div class="field">
-            <label>Site</label>
-            <input type="text" id="site-location" placeholder="e.g. SOUTH C" />
-          </div>
+  <div class="wrap">
+    <!-- Site + product selection -->
+    <div class="site-card">
+      <h2>1. Station &amp; operating profile</h2>
+      <div class="site-grid">
+        <div>
+          <label>Client / Station</label>
+          <input type="text" id="client-name" placeholder="e.g. AINUSHAMSI ENERGY" />
         </div>
-        <div class="ctrl-row">
-          <div class="field" style="max-width:90px;">
-            <label>Hrs / day</label>
-            <input type="number" id="hours-day" min="1" max="24" step="0.5" value="18" />
-          </div>
-          <div class="field" style="max-width:90px;">
-            <label>Days / wk</label>
-            <input type="number" id="days-week" min="1" max="7" step="1" value="7" />
-          </div>
-          <div class="field" style="max-width:110px;">
-            <label>Date</label>
-            <input type="date" id="calc-date" />
-          </div>
+        <div>
+          <label>Site location</label>
+          <input type="text" id="site-location" placeholder="e.g. SOUTH C" />
+        </div>
+        <div>
+          <label>Operating hours / day</label>
+          <input type="number" id="hours-day" min="1" max="24" step="0.5" value="18" />
+        </div>
+        <div>
+          <label>Operating days / week</label>
+          <input type="number" id="days-week" min="1" max="7" step="1" value="7" />
         </div>
       </div>
-      <div>
-        <label style="display:block;font-size:0.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:2px;">Products (select 1–3)</label>
+
+      <div class="product-row">
+        <label>2. Select products to analyse (1–3)</label>
         <div class="product-toggle" id="product-toggle">
           <div class="p-toggle" data-product="PMS">PMS<small>Petrol</small></div>
           <div class="p-toggle" data-product="AGO">AGO<small>Diesel</small></div>
@@ -483,44 +536,30 @@
           <div class="p-toggle" data-product="IK">IK<small>Kerosene</small></div>
         </div>
       </div>
-      <div style="display:flex;gap:6px;align-items:center;">
+
+      <div class="actions">
         <button type="button" class="btn btn-primary" id="btn-calc">Calculate Losses</button>
         <button type="button" class="btn btn-outline" id="btn-reset">Reset</button>
       </div>
     </div>
 
-    <!-- THREE COLUMNS -->
-    <div class="three-cols">
-      <!-- COL 1: Full capacity -->
-      <div class="col col-full">
-        <div class="col-head">Revenue at Full Assets Capacity</div>
-        <div class="col-body" id="col-full-body">
-          <div class="empty-state">Select product(s) and enter volumes, nozzles &amp; price. Then calculate.</div>
-        </div>
-      </div>
+    <!-- Combined total (shown when results exist for 2+) -->
+    <div id="combined-strip" class="combined-strip" style="display:none;"></div>
 
-      <!-- COL 2: With breakdown -->
-      <div class="col col-break">
-        <div class="col-head">Revenue with Breakdown</div>
-        <div class="col-body" id="col-break-body">
-          <div class="empty-state">Enter how many nozzles are out of service per product, then calculate.</div>
-        </div>
-      </div>
-
-      <!-- COL 3: Interpretation -->
-      <div class="col col-interp">
-        <div class="col-head">Loss Interpretation — Cost of Delay</div>
-        <div class="col-body" id="col-interp-body">
-          <div class="empty-state">The difference between full capacity and breakdown appears here — second by second, year by year.</div>
-        </div>
+    <!-- Product blocks injected here -->
+    <div id="products-area">
+      <div class="empty-msg">
+        Select one or more products above, enter volumes and nozzles,<br/>
+        then click <strong>Calculate Losses</strong>.
       </div>
     </div>
 
-    <div class="footer-mini">FORECOURT WORKS LTD · Preventive R&amp;M stops these losses before the island goes quiet · www.forecourtworks.co.ke</div>
+    <footer class="app-foot">
+      FORECOURT WORKS LTD · Preventive R&amp;M stops these losses before the island goes quiet · www.forecourtworks.co.ke
+    </footer>
   </div>
 
   <div class="toast" id="toast"></div>
-
   <script src="app.js"></script>
 </body>
 </html>
